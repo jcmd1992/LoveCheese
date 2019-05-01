@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "381049848645",
+    "firebase_url": "https://lovecheese-f9780.firebaseio.com",
+    "project_id": "lovecheese-f9780",
+    "storage_bucket": "lovecheese-f9780.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:381049848645:android:b1d2f1856ca3cb9d",
+        "android_client_info": {
+          "package_name": "ie.JD"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "381049848645-ncuob16vn1ihf4s4phg4fnh9n0667t9l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANkWbojY_wxnYcRJD8s2CH39lCoECcMFE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "381049848645-ncuob16vn1ihf4s4phg4fnh9n0667t9l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
