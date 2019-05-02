@@ -2,7 +2,6 @@ package ie.JD.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RatingBar;
@@ -13,17 +12,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import ie.JD.R;
-import ie.JD.activities.Home;
 import ie.JD.models.Cheese;
 
 public class Add extends Base {
 
-    private String        cheeseName, cheeseOrigin;
-    private double        cheesePrice, ratingValue;
+    private String 		cheeseName, cheeseOrigin;
+    private double 		cheesePrice, ratingValue;
     private EditText name, origin, price;
     private RatingBar ratingBar;
     DatabaseReference myDatabase;
-    Base app;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -68,3 +66,4 @@ public class Add extends Base {
                     Toast.LENGTH_SHORT).show();
     }
 }
+

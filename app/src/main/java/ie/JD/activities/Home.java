@@ -20,9 +20,7 @@ import ie.JD.models.Cheese;
 
 public class Home extends Base {
 
-
     DatabaseReference myDatabase;
-    Base app;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +53,19 @@ public class Home extends Base {
     public void add(View v) {
         startActivity(new Intent(this, Add.class));
     }
+    public void favourite(View v) {
+        startActivity(new Intent(this, CheeseFavourites.class));
+    }
+    public void search(View v) {
+        startActivity(new Intent(this, CheeseSearch.class));
+    }
 
     @Override
     protected void onResume() {
         super.onResume();
 
         cheeseFragment = CheeseFragment.newInstance(); //get a new Fragment instance
-        getFragmentManager().beginTransaction()
+        getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, cheeseFragment)
                 .commit(); // add it to the current activity
 

@@ -2,6 +2,7 @@ package ie.JD.activities;
 
 import ie.JD.R;
 import ie.JD.fragments.CheeseFragment;
+import ie.JD.main.CheeseApp;
 import ie.JD.models.Cheese;
 
 import android.app.AlertDialog;
@@ -16,9 +17,15 @@ import java.util.ArrayList;
 
 public class Base extends AppCompatActivity {
 
-    public static ArrayList<Cheese> cheeseList = new ArrayList<ie.JD.models.Cheese>();
+    public CheeseApp app;
     public Bundle activityInfo; // Used for persistence (of sorts)
-    public CheeseFragment cheeseFragment; // How we'll 'share' our List of Cheese between Activities
+    //  public CheeseFragment cheeseFragment; // How we'll 'share' our List of Cheeses between Activities
+    public CheeseFragment cheeseFragment;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        app = (CheeseApp) getApplication();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

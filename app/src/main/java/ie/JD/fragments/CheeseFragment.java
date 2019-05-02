@@ -1,11 +1,11 @@
 package ie.JD.fragments;
 
 import android.app.AlertDialog;
-import android.app.ListFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ListFragment;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,13 +15,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+
+import java.util.ArrayList;
+import java.util.Random;
+
 import ie.JD.R;
 import ie.JD.activities.Base;
+
+import ie.JD.activities.CheeseFavourites;
 import ie.JD.activities.Edit;
+import ie.JD.adapters.CheeseFilter;
 import ie.JD.adapters.CheeseListAdapter;
 import ie.JD.models.Cheese;
 
@@ -31,6 +39,7 @@ public class CheeseFragment extends ListFragment implements View.OnClickListener
     public Base activity;
     public static CheeseListAdapter listAdapter;
     public ListView listView;
+    public CheeseFilter cheeseFilter;
 
     public CheeseFragment() {
         // Required empty public constructor
@@ -49,8 +58,8 @@ public class CheeseFragment extends ListFragment implements View.OnClickListener
     }
 
     public static CheeseFragment newInstance() {
-        CheeseFragment fragment = new CheeseFragment();
-        return fragment;
+        CheeseFragment myfragment = new CheeseFragment();
+        return myfragment;
     }
 
     @Override
@@ -64,8 +73,18 @@ public class CheeseFragment extends ListFragment implements View.OnClickListener
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        listAdapter = new CheeseListAdapter(activity, this, Base.cheeseList);
+        listAdapter = new CheeseListAdapter(activity, this, activity.app.cheeseList);
+        cheeseFilter = new CheeseFilter(activity.app.cheeseList,"all",listAdapter);
+
+        if (getActivity() instanceof CheeseFavourites) {
+            cheeseFilter.setFilter("favourites"); // Set the filter text field from 'all' to 'favourites'
+            cheeseFilter.filter(null); // Filter the data, but don't use any prefix
+            listAdapter.notifyDataSetChanged(); // Update the adapter
+        }
         setListAdapter (listAdapter);
+
+        //    setRandomCheese();
+        checkEmptyList();
     }
 
     @Override
@@ -106,11 +125,11 @@ public class CheeseFragment extends ListFragment implements View.OnClickListener
             public void onClick(DialogInterface dialog, int id)
             {
 
-                Base.cheeseList.remove(cheese); // remove from our list
+                activity.app.cheeseList.remove(cheese); // remove from our list
                 listAdapter.cheeseList.remove(cheese); // update adapters data
                 DatabaseReference ToDelete = FirebaseDatabase.getInstance().getReference().child("Cheese");
                 DatabaseReference cheeseToDelete = ToDelete.child(cheese.cheeseId);
-
+                //    setRandomCheese();
                 listAdapter.notifyDataSetChanged(); // refresh adapter
                 cheeseToDelete.removeValue();
             }
@@ -158,16 +177,29 @@ public class CheeseFragment extends ListFragment implements View.OnClickListener
         {
             if (listView.isItemChecked(i))
             {
-                Base.cheeseList.remove(listAdapter.getItem(i));
+                activity.app.cheeseList.remove(listAdapter.getItem(i));
             }
         }
+        //     setRandomCheese();
+        listAdapter.notifyDataSetChanged(); // refresh adapter
+        checkEmptyList();
         actionMode.finish();
-        listAdapter.notifyDataSetChanged();
+    }
+
+    public void checkEmptyList()
+    {
+        TextView recentList = getActivity().findViewById(R.id.emptyList);
+
+        if(activity.app.cheeseList.isEmpty())
+            recentList.setText(getString(R.string.emptyMessageLbl2));
+        else
+            recentList.setText("");
     }
 
     @Override
     public void onDestroyActionMode(ActionMode actionMode)
     {}
+
 
     @Override
     public void onItemCheckedStateChanged(ActionMode actionMode, int position, long id, boolean checked)

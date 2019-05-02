@@ -28,7 +28,7 @@ public class CheeseListAdapter extends ArrayAdapter<Cheese>
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         CheeseItem item = new CheeseItem(context, parent,
-                                         deleteListener, cheeseList.get(position));
+                deleteListener, cheeseList.get(position));
         return item.view;
     }
 
