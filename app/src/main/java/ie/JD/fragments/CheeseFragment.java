@@ -16,6 +16,9 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import ie.JD.R;
 import ie.JD.activities.Base;
 import ie.JD.activities.Edit;
@@ -102,9 +105,14 @@ public class CheeseFragment extends ListFragment implements View.OnClickListener
         {
             public void onClick(DialogInterface dialog, int id)
             {
+
                 Base.cheeseList.remove(cheese); // remove from our list
                 listAdapter.cheeseList.remove(cheese); // update adapters data
+                DatabaseReference ToDelete = FirebaseDatabase.getInstance().getReference().child("Cheese");
+                DatabaseReference cheeseToDelete = ToDelete.child(cheese.cheeseId);
+
                 listAdapter.notifyDataSetChanged(); // refresh adapter
+                cheeseToDelete.removeValue();
             }
         }).setNegativeButton("No", new DialogInterface.OnClickListener()
         {

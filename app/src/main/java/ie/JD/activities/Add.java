@@ -13,12 +13,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import ie.JD.R;
+import ie.JD.activities.Home;
 import ie.JD.models.Cheese;
 
 public class Add extends Base {
 
-    private String 		cheeseName, cheeseOrigin;
-    private double 		cheesePrice, ratingValue;
+    private String        cheeseName, cheeseOrigin;
+    private double        cheesePrice, ratingValue;
     private EditText name, origin, price;
     private RatingBar ratingBar;
     DatabaseReference myDatabase;
@@ -47,14 +48,15 @@ public class Add extends Base {
         cheeseName = name.getText().toString();
         cheeseOrigin = origin.getText().toString();
         ratingValue = ratingBar.getRating();
-
+        String cheesePriceString = price.getText().toString();
+        cheesePrice = Double.parseDouble(cheesePriceString);
+        boolean favourite = false;
         if ((cheeseName.length() > 0) && (origin.length() > 0))
         {
+            if (ratingValue>=4){favourite =true;}
+            Cheese c = new Cheese(cheeseName, cheeseOrigin, ratingValue, cheesePrice,favourite);
 
-            Cheese c = new Cheese(cheeseName, origin, ratingValue,
-                    false);
-
-           // myDatabase.child(c.cheeseId).setValue(c);
+            myDatabase.child(c.cheeseId).setValue(c);
             app.cheeseList.add(c);
 
             startActivity(new Intent(this, Home.class));

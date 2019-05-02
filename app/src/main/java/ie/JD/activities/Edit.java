@@ -24,6 +24,7 @@ public class Edit extends Base {
     public Cheese aCheese;
     public ImageView editFavourite;
     DatabaseReference myDatabase;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,12 +35,12 @@ public class Edit extends Base {
 
         Log.v("LoveCheese", "EDIT : " + aCheese);
 
-        ((TextView)findViewById(R.id.editTitleTV)).setText(aCheese.cheeseName);
+        ((TextView) findViewById(R.id.editTitleTV)).setText(aCheese.cheeseName);
 
-        ((EditText)findViewById(R.id.editNameET)).setText(aCheese.cheeseName);
-        ((TextView)findViewById(R.id.editOriginET)).setText(aCheese.origin);
-        ((EditText)findViewById(R.id.editPriceET)).setText(""+aCheese.price);
-        ((RatingBar) findViewById(R.id.editRatingBar)).setRating((float)aCheese.rating);
+        ((EditText) findViewById(R.id.editNameET)).setText(aCheese.cheeseName);
+        ((TextView) findViewById(R.id.editOriginET)).setText(aCheese.origin);
+        ((EditText) findViewById(R.id.editPriceET)).setText("" + aCheese.price);
+        ((RatingBar) findViewById(R.id.editRatingBar)).setRating((float) aCheese.rating);
 
         FirebaseApp.initializeApp(this);
 
@@ -71,7 +72,7 @@ public class Edit extends Base {
         String cheeseName = ((EditText) findViewById(R.id.editNameET)).getText().toString();
         String cheeseOrigin = ((EditText) findViewById(R.id.editOriginET)).getText().toString();
         String cheesePriceStr = ((EditText) findViewById(R.id.editPriceET)).getText().toString();
-        double ratingValue =((RatingBar) findViewById(R.id.editRatingBar)).getRating();
+        double ratingValue = ((RatingBar) findViewById(R.id.editRatingBar)).getRating();
         double cheesePrice;
 
         try {
@@ -86,22 +87,24 @@ public class Edit extends Base {
             aCheese.price = cheesePrice;
             aCheese.rating = ratingValue;
 
-            startActivity(new Intent(this,Home.class));
+            DatabaseReference dbEdit = FirebaseDatabase.getInstance().getReference("Cheese").child(aCheese.cheeseId);
+            dbEdit.setValue(aCheese);
+            startActivity(new Intent(this, Home.class));
 
         } else
-            Toast.makeText(this, "You must Enter Something for Name and Origin",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "You must Enter Something for Name and Origin", Toast.LENGTH_SHORT).show();
     }
 
     public void toggle(View view) {
 
         if (isFavourite) {
             aCheese.favourite = false;
-            Toast.makeText(this,"Removed From Favourites",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Removed From Favourites", Toast.LENGTH_SHORT).show();
             isFavourite = false;
             editFavourite.setImageResource(R.drawable.favourites_72);
         } else {
             aCheese.favourite = true;
-            Toast.makeText(this,"Added to Favourites !!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Added to Favourites !!", Toast.LENGTH_SHORT).show();
             isFavourite = true;
             editFavourite.setImageResource(R.drawable.favourites_72_on);
         }
