@@ -20,6 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="ie.JD.activities.CheeseSearch" />
         <activity android:name="ie.JD.activities.CheeseFavourites" />
         <activity android:name="ie.JD.activities.Add" />
         <activity android:name="ie.JD.activities.Help" />
